@@ -7,28 +7,22 @@ struct ApiFailureError {
         
         switch code {
         case .Reachability:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.INTERNET_CONNECTION_ERROR,
-                                              comment: Constants.LocalizedStringKeys.INTERNET_CONNECTION_ERROR)
+            customMessage ="Internet is not working or connected properly. Check for Wifi or Data connection"
             errorDescription = "Internet is not working or connected properly. Check for Wifi or Data connection"
         case .JSONParsing:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE,
-                                              comment: Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE)
+            customMessage = "Something went wrong while parsing JSON. Please check the JSON response or the object"
             errorDescription = "Something went wrong while parsing JSON. Please check the JSON response or the object"
         case .Unauthorized:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.SESSION_EXPIRED,
-                                              comment: Constants.LocalizedStringKeys.SESSION_EXPIRED)
+            customMessage = "Token expired, try using the refresh token or login again using credentials"
             errorDescription = "Token expired, try using the refresh token or login again using credentials"
         case .InvalidCredentials:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.WRONG_CREDENTIALS,
-                                              comment: Constants.LocalizedStringKeys.WRONG_CREDENTIALS)
+            customMessage = "Password or Username is wrong."
             errorDescription = "Password or Username is wrong."
         case .Timeout:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE,
-                                              comment: Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE)
+            customMessage = "Timedout."
             errorDescription = "Timedout."
         default:
-            customMessage = NSLocalizedString(Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE,
-                                              comment: Constants.LocalizedStringKeys.SOMETHING_WENT_WRONG_MESSAGE)
+            customMessage = "Something went wrong while parsing JSON. Please check the JSON response or the object"
             errorDescription = "Something went wrong while parsing JSON. Please check the JSON response or the object"      
         }
     }
