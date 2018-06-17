@@ -7,7 +7,7 @@ struct ApiFailureError {
         
         switch code {
         case .Reachability:
-            customMessage ="Internet is not working or connected properly. Check for Wifi or Data connection"
+            customMessage = "Internet is not working or connected properly. Check for Wifi or Data connection"
             errorDescription = "Internet is not working or connected properly. Check for Wifi or Data connection"
         case .JSONParsing:
             customMessage = "Something went wrong while parsing JSON. Please check the JSON response or the object"
