@@ -59,7 +59,9 @@ extension Date {
         let dateString = dateFormatter.string(from: self)
         return dateFormatter.date(from: dateString)
     }
-    
+
+    // TODO: Add Strings instead of constants
+    /*
     func timeSince(from: NSDate, withFormat format: String) -> String {
         let calendar = Calendar.current
         let now = self as NSDate
@@ -127,6 +129,7 @@ extension Date {
         
         return ""
     }
+    */
     
     func isLesserThan(date: Date)  -> Bool{
         let result = self.compare(date)
