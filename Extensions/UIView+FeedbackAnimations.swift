@@ -43,16 +43,12 @@ extension UIView {
     }
     
     
-    /// Helps to chain animation calls without nested closure.
-    /// Just remember to set totalDuration = 0 in the last call in the chain.
-    static var totalDuration: TimeInterval = 0
     func animation(withDuration duration: TimeInterval,
+                   delay: TimeInterval = 0,
                    options: UIView.AnimationOptions = UIView.AnimationOptions.allowUserInteraction,
                    completion: @escaping () -> Void) -> UIView {
         
-        UIView.totalDuration += duration
-        UIView.animate(withDuration: duration, delay: UIView.totalDuration, options: options, animations: completion, completion: nil)
-        
+        UIView.animate(withDuration: duration, delay: delay, options: options, animations: completion, completion: nil)
         return self
     }
 }
