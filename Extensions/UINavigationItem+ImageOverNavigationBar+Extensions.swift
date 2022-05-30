@@ -1,3 +1,5 @@
+import UIKit
+
 extension UINavigationItem {
     func addImage(image: UIImage, navigationBar: UINavigationBar) {
         let imageView = UIImageView(image: image)

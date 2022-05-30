@@ -1,6 +1,7 @@
 import Foundation
 
 extension Encodable {
+    
     // Converts the Model class to JSON Data
     func toJSONData() throws -> Data {
         return try JSONEncoder().encode(self)

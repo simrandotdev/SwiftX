@@ -1,3 +1,5 @@
+import UIKit
+
 extension UIView {
     func pulsate() {
         let pulse = CASpringAnimation(keyPath: "transform.scale")
