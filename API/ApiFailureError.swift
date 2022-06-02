@@ -1,33 +1,33 @@
 import Foundation
 
-struct ApiFailureError {
+struct CompanionError {
     
-    init(statusCode code: StatusCode) {
-        self.statusCode = code
+    var title: String
+    var message: String
+    var errorMessage: String
+    
+    init(error: APIErrors) {
+        title = "Error"
+        message = "Something went wrong, please try again."
+        switch(error) {
         
-        switch code {
-        case .Reachability:
-            customMessage = "Internet is not working or connected properly. Check for Wifi or Data connection."
-            errorDescription = "Internet is not working or connected properly. Check for Wifi or Data connection."
-        case .JSONParsing:
-            customMessage = "Something went wrong while parsing response. Please check the response."
-            errorDescription = "Something went wrong while parsing response. Please check the response."
-        case .Unauthorized:
-            customMessage = "Session expired, please try logging in again."
-            errorDescription = "Token expired, try using the refresh token or login again using credentials."
-        case .InvalidCredentials:
-            customMessage = "Password or Username is wrong."
-            errorDescription = "Password or Username is wrong."
-        case .Timeout:
-            customMessage = "Request Timedout."
-            errorDescription = "Request Timedout."
-        default:
-            customMessage = "Something went wrong. Please try again."
-            errorDescription = "Something went wrong. Please try again."      
+        case .invalidResponse(let description):
+            errorMessage = description
+        case .invalidRequestWithIncorrectUrlFormat(let description):
+            errorMessage = description
+        case .badRequest(let description):
+            errorMessage = description
+        case .invalidUrl(let description):
+            errorMessage = description
+        case .unauthorized(let description):
+            message = "You are not authorized to access this resource."
+            errorMessage = description
+        case .failedToParseJSON(let description):
+            errorMessage = description
+        case .unknown(let description):
+            errorMessage = description
         }
+        
+        print("❌", errorMessage)
     }
-    
-    var errorDescription: String?
-    var customMessage: String?
-    var statusCode: StatusCode?
 }

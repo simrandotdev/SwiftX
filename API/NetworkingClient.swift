@@ -21,7 +21,9 @@ public class NetworkingClient {
         headers: [String : String]? = nil) async throws -> ResponseType {
             
             guard let completeUrl = makeUrlComponents(withUrl: url, queryParameters: queryParameters)?.url else {
-                throw APIErrors.invalidRequestWithIncorrectUrlFormat
+                throw APIErrors.invalidRequestWithIncorrectUrlFormat(
+                    "Failed to create url with the passed query parameters of \(String(describing: queryParameters))"
+                )
             }
             
             let request = makeUrlRequest(withMethod: method,
@@ -39,13 +41,17 @@ public class NetworkingClient {
                                                          response: APIHttpResponse) throws -> ResponseType {
         switch response.statusCode {
         case 200..<300:
-            return try converData(toType: type,
-                                  data: response.data,
-                                  dateDecodingStrategy: dateDecodingStrategy)
+            do {
+                return try converData(toType: type,
+                                      data: response.data,
+                                      dateDecodingStrategy: dateDecodingStrategy)
+            } catch {
+                throw APIErrors.failedToParseJSON(error.localizedDescription)
+            }
         case 400:
-            throw APIErrors.badRequest("Bad request.")
+            throw APIErrors.badRequest("Bad request with status code: \(response.statusCode)")
         default:
-            throw APIErrors.invalidResponse
+            throw APIErrors.unknown("Failed to parse response with status code: \(response.statusCode) ")
         }
         
     }
@@ -80,7 +86,7 @@ public class NetworkingClient {
         
         let (data, response) = try await session.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIErrors.invalidResponse
+            throw APIErrors.invalidResponse("Failed to convert response to HTTPURLResponse")
         }
         return APIHttpResponse(data: data, response: httpResponse)
         
@@ -129,9 +135,11 @@ public enum APIHttpMethod: String {
 
 
 public enum APIErrors: Error {
-    case invalidResponse
-    case invalidRequestWithIncorrectUrlFormat
+    case invalidResponse(String)
+    case invalidRequestWithIncorrectUrlFormat(String)
     case badRequest(String)
-    case invalidUrl
-    case unauthorized
+    case invalidUrl(String)
+    case unauthorized(String)
+    case failedToParseJSON(String)
+    case unknown(String)
 }
